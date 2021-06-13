@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.user.mapper.UserMapper">
+    <insert id="signInUser" parameterType="userModel">
+        INSERT INTO userdb(id, pass, phone, mail, comment)
+        VALUES(#{id}, #{pass}, #{phone}, #{mail}, #{comment})
+    </insert>
+
+    <update id="modifyUser" parameterType="userModel">
+        UPDATE userdb
+        SET
+        <choose>
+            <when test="pass != null and pass != ''">
+                pass = #{pass},
+                phone = #{phone},
+                mail = #{mail}
+            </when>
+            <otherwise>
+                phone = #{phone},
+                mail = #{mail}
+            </otherwise>
+        </choose>
+        WHERE id = #{id}
+    </update>
+
+    <select id="searchUser" parameterType="String" resultType="userModel">
+        SELECT * FROM userdb WHERE id = #{id}
+    </select>
+
+    <delete id="deleteUser" parameterType="String">
+        DELETE FROM userdb WHERE id = #{id}
+    </delete>
+
+    <select id="listUser" parameterType="String" resultType="userModel">
+        SELECT * FROM userdb WHERE id LIKE concat('%', #{id}, '%')
+    </select>
+</mapper>

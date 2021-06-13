@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.newscroller.mapper.NewsCrollerMapper">
+    <select id="getGugunCode" parameterType="String" resultType="String">
+        SELECT gugun_code FROM guguncode WHERE gugun_name = #{gugun} and gugun_code LIKE concat(#{cityCode}, '%')
+    </select>
+
+    <select id="getCityCode" parameterType="String" resultType="String">
+        SELECT sido_code FROM sidocode WHERE sido_name = #{city};
+    </select>
+</mapper>

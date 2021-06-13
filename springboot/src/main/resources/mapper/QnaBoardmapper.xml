@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.qnaboard.mapper.QnaBoardMapper">
+
+    <insert id="writeBoard" parameterType="qnaBoardModel">
+        INSERT
+        INTO
+            QNABOARD (title, writer, contents, regDate)
+        VALUES(#{title}, #{writer}, #{contents}, #{regDate})
+    </insert>
+
+    <select id="showList" resultType="qnaBoardModel">
+        SELECT boardNum, title, writer, regDate FROM QNABOARD
+    </select>
+
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM QNABOARD WHERE boardNum = ${boardNum}
+    </delete>
+
+    <select id="selectBoard" parameterType="int" resultType="qnaBoardModel">
+        SELECT * FROM QNABOARD WHERE boardNum = ${boardNum}
+    </select>
+
+    <select id="searchBoard" parameterType="String" resultType="qnaBoardModel">
+        SELECT * FROM QNABOARD WHERE ${searchOption} LIKE concat('%', #{value}, '%')
+        LIMIT ${limit} offset ${offset}
+    </select>
+
+    <update id="updateBoard" parameterType="qnaBoardModel">
+        UPDATE QNABOARD
+        SET title = #{title}, contents = #{contents}
+        WHERE boardNum = ${boardNum}
+    </update>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT count(*)
+        FROM QNABOARD
+    </select>
+
+    <select id="selectBoardLimitOffset" parameterType="map" resultType="qnaBoardModel">
+        SELECT boardNum, title, writer, contents, regDate
+        FROM QNABOARD
+        LIMIT ${limit} offset ${offset}
+    </select>
+</mapper>
